@@ -45,7 +45,7 @@ class BirlesikOdeme {
       },
     });
 
-    this.authenticate(password, lang, email).catch((error) => console.error('Authentication failed:', error));
+    this.authenticate(password, lang, email).catch((error) => console.log('Authentication failed:', error));
   }
 
   private calculateHash(data: string): string {
