@@ -19,7 +19,28 @@
     "type": "git",
     "url": "git+https://github.com/Ufuck1903/birlesikodeme.git"
   },
-  "keywords": ["United Payment Sanal Pos","birlesikodeme"],
+  "keywords": [
+    "payment",
+    "gateway",
+    "processing",
+    "integration",
+    "API",
+    "online payments",
+    "transactions",
+    "credit card",
+    "authorization",
+    "inquiry",
+    "commission",
+    "installment",
+    "card management",
+    "history",
+    "merchant",
+    "BIN",
+    "3D secure",
+    "customer cards",
+    "client",
+    "TypeScript"
+  ],
   "author": "Ufuck1903",
   "license": "MIT",
   "bugs": {
@@ -29,10 +50,13 @@
   "devDependencies": {
     "@types/jest": "^28.1.6",
     "jest": "^28.1.3",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.8",
     "ts-jest": "^28.0.7",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
   }
 }
