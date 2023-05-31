@@ -1,66 +1,66 @@
 export interface OrderProduct {
-	merchantId: number
-	productId: string
-	amount: string
-	productName: string
-	commissionRate: string
-	description: string
-}
-
-export interface BillingOrDeliveryInfo {
-	taxNo?: string
-	taxOffice?: string
-	firmName?: string
-	identityNumber?: string
-	fullName?: string
-	email?: string
-	phone?: string
-	address?: string
-	city?: string
-	town?: string
-	zipCode?: string
-}
-
-export interface PaymentAuthorizationRequest {
-	merchantId: number
-	customerId?: string
-	userCode: string
-	txnType: string
-	installmentCount?: string
-	currency: string
-	okUrl?: string
-	failUrl?: string
-	orderId: string
-	totalAmount: string
-	rnd: string
-	hash: string
-	description?: string
-	requestIp?: string
-	orderProductList?: OrderProduct[]
-	billingInfo?: BillingOrDeliveryInfo
-	deliveryInfo?: BillingOrDeliveryInfo
-	maturityPeriod?: string
-	paymentFrequency?: string
-}
-
-export interface PaymentAuthorizationResponse {
-	orderId: string
-	rnd: string
-	hostReference: string
-	authCode: string
-	totalAmount: string
-	responseHash: string
-	responseCode: string
-	responseMessage: string
-	customerId: string
-	extraData: string
-	installmentCount: string
-	cardNumber: string
-	saleDate: string
-	vPosName: string
-	paymentSystem: string
-}
-export interface Payment3dRequest {
+	merchantId: number;
+	productId: string;
+	amount: string;
+	productName: string;
+	commissionRate: string;
+	description: string;
+  }
+  
+  export interface BillingOrDeliveryInfo {
+	taxNo?: string;
+	taxOffice?: string;
+	firmName?: string;
+	identityNumber?: string;
+	fullName?: string;
+	email?: string;
+	phone?: string;
+	address?: string;
+	city?: string;
+	town?: string;
+	zipCode?: string;
+  }
+  
+  export interface PaymentAuthorizationRequest {
+	merchantId: number;
+	customerId?: string;
+	userCode: string;
+	txnType: string;
+	installmentCount?: string;
+	currency: string;
+	okUrl?: string;
+	failUrl?: string;
+	orderId: string;
+	totalAmount: string;
+	rnd: string;
+	hash: string;
+	description?: string;
+	requestIp?: string;
+	orderProductList?: OrderProduct[];
+	billingInfo?: BillingOrDeliveryInfo;
+	deliveryInfo?: BillingOrDeliveryInfo;
+	maturityPeriod?: string;
+	paymentFrequency?: string;
+  }
+  
+  export interface PaymentAuthorizationResponse {
+	orderId: string;
+	rnd: string;
+	hostReference: string;
+	authCode: string;
+	totalAmount: string;
+	responseHash: string;
+	responseCode: string;
+	responseMessage: string;
+	customerId: string;
+	extraData: string;
+	installmentCount: string;
+	cardNumber: string;
+	saleDate: string;
+	vPosName: string;
+	paymentSystem: string;
+  }
+  export interface Payment3dRequest {
 	insertCard: boolean;
 	use3D: boolean;
 	merchantId: number;
@@ -87,17 +87,17 @@ export interface Payment3dRequest {
 	cardHolderName: string;
 	extraData: string;
 	campaign?: {
-		text: string;
-		value: string;
+	  text: string;
+	  value: string;
 	};
 	billingInfo?: CustomerInfo;
 	deliveryInfo?: CustomerInfo;
 	orderProductList: Product[];
 	maturityPeriod: string;
 	paymentFrequency: string;
-}
-
-export interface CustomerInfo {
+  }
+  
+  export interface CustomerInfo {
 	taxNo: string;
 	taxOffice: string;
 	firmName: string;
@@ -109,18 +109,18 @@ export interface CustomerInfo {
 	city: string;
 	town: string;
 	zipCode: string;
-}
-
-export interface Product {
+  }
+  
+  export interface Product {
 	merchantId: number;
 	productId: string;
 	amount: string;
 	productName: string;
 	commissionRate: string;
 	description: string;
-}
-
-export interface Payment3dResponse {
+  }
+  
+  export interface Payment3dResponse {
 	orderId: string;
 	rnd: string;
 	hostReference: string;
@@ -136,9 +136,9 @@ export interface Payment3dResponse {
 	saleDate: string;
 	vPosName: string;
 	paymentSystem: string;
-}
-
-export interface PaymentInquiryRequest {
+  }
+  
+  export interface PaymentInquiryRequest {
 	memberId: number;
 	merchantId: number;
 	customerId?: string;
@@ -147,9 +147,9 @@ export interface PaymentInquiryRequest {
 	rnd: string;
 	orderNo: string;
 	totalAmount: string;
-}
-
-export interface PaymentInquiryResponse {
+  }
+  
+  export interface PaymentInquiryResponse {
 	orderId: string;
 	cardNumber: string;
 	amount: string;
@@ -171,9 +171,9 @@ export interface PaymentInquiryResponse {
 	transId: number;
 	customerId: string;
 	merchantId: number;
-}
-
-export interface CommissionResponse {
+  }
+  
+  export interface CommissionResponse {
 	bank: string;
 	bankName: string;
 	blockDay: number;
@@ -183,14 +183,14 @@ export interface CommissionResponse {
 	cardType: string;
 	currency: string;
 	trnGroup: string;
-}
-
-export interface CommissionInstallResponse extends CommissionResponse {
+  }
+  
+  export interface CommissionInstallResponse extends CommissionResponse {
 	installmentCount: number;
 	installmentReleaseType: string;
-}
-
-export interface BinListResponse {
+  }
+  
+  export interface BinListResponse {
 	isBusinessCard: boolean;
 	cardType: string;
 	bankName: string;
@@ -201,9 +201,9 @@ export interface BinListResponse {
 	avoidAuthInstall: boolean;
 	network: string;
 	brandName: string;
-}
-
-export interface SaveCardWithoutTransactionRequest {
+  }
+  
+  export interface SaveCardWithoutTransactionRequest {
 	memberId: number;
 	merchantId: number;
 	customerId?: string;
@@ -218,13 +218,13 @@ export interface SaveCardWithoutTransactionRequest {
 	failUrl?: string;
 	use3D: boolean;
 	insertCard: boolean;
-}
-
-export interface SaveCardWithoutTransactionResponse {
+  }
+  
+  export interface SaveCardWithoutTransactionResponse {
 	responseHtml: string;
-}
-
-export interface TransactionData {
+  }
+  
+  export interface TransactionData {
 	orderNo: string;
 	requestIp: string | null;
 	txnType: string;
@@ -257,21 +257,21 @@ export interface TransactionData {
 	campaignValue: string | null;
 	extraData: string | null;
 	commissionRate: number;
-}
-
-export interface TransactionListResponse {
+  }
+  
+  export interface TransactionListResponse {
 	fail: boolean;
 	statusCode: number;
 	result: {
-		page: number;
-		pageSize: number;
-		totalPage: number;
-		totalCount: number;
-		data: TransactionData[];
+	  page: number;
+	  pageSize: number;
+	  totalPage: number;
+	  totalCount: number;
+	  data: TransactionData[];
 	};
-}
-
-export interface MerchantData {
+  }
+  
+  export interface MerchantData {
 	merchantStatus: string;
 	name: string;
 	forceNonsecureAddCard: boolean;
@@ -300,21 +300,21 @@ export interface MerchantData {
 	channel: string;
 	merchantPassword: string | null;
 	avoidAddCard: boolean;
-}
-
-export interface MerchantListResponse {
+  }
+  
+  export interface MerchantListResponse {
 	fail: boolean;
 	statusCode: number;
 	result: {
-		page: number;
-		pageSize: number;
-		totalPage: number;
-		totalCount: number;
-		data: MerchantData[];
+	  page: number;
+	  pageSize: number;
+	  totalPage: number;
+	  totalCount: number;
+	  data: MerchantData[];
 	};
-}
-
-export interface BinData {
+  }
+  
+  export interface BinData {
 	isBusinessCard: boolean;
 	cardType: string;
 	bankName: string;
@@ -325,9 +325,9 @@ export interface BinData {
 	network: string;
 	avoidPreauthInstall: boolean;
 	avoidAuthInstall: boolean;
-}
-
-export interface CardCheckPointsRequest {
+  }
+  
+  export interface CardCheckPointsRequest {
 	cardHolderName: string;
 	cardNo: string;
 	expiryDateYear: string;
@@ -338,15 +338,15 @@ export interface CardCheckPointsRequest {
 	cardAlias?: string;
 	memberId: number;
 	customerId?: string;
-}
-
-export interface CardCheckPointsResponse {
+  }
+  
+  export interface CardCheckPointsResponse {
 	pointAmount: string;
 	responseCode: string;
 	responseMessage: string;
-}
-
-export interface IptalIadeServisiRequest {
+  }
+  
+  export interface IptalIadeServisiRequest {
 	memberId: number;
 	merchantId: number;
 	customerId?: string;
@@ -362,15 +362,15 @@ export interface IptalIadeServisiRequest {
 	requestIp?: string;
 	extraData?: string;
 	orderProductList?: {
-		merchantId: number;
-		productId: string;
-		amount: string;
-		productName: string;
-		commissionRate: string;
+	  merchantId: number;
+	  productId: string;
+	  amount: string;
+	  productName: string;
+	  commissionRate: string;
 	}[];
-}
-
-export interface IptalIadeServisiResponse {
+  }
+  
+  export interface IptalIadeServisiResponse {
 	url: string;
 	responseCode: string;
 	responseMessage: string;
@@ -379,56 +379,56 @@ export interface IptalIadeServisiResponse {
 	txnStatus: string;
 	vposId: number;
 	vposName: string;
-}
-
-export interface PaymentRequest {
-	name: string,
-	cardNo: string,
-	orderNo: string,
-	amount: number,
-	year: string,
-	month: string,
-	cvv: string,
-	txnType: string,
-	txnSubType: string,
-	address: string,
-	point: number,
-	installment: string,
-	merchantVposId: number
-}
-
-export interface PaymentResponse {
-	url: string,
-	responseCode: string,
-	responseMessage: string,
-	orderId: string,
-	txnType: string,
-	txnStatus: string,
-	vposId: number,
-	vposName: string
-}
-
-export interface CommissionInquiryRequest {
+  }
+  
+  export interface PaymentRequest {
+	name: string;
+	cardNo: string;
+	orderNo: string;
+	amount: number;
+	year: string;
+	month: string;
+	cvv: string;
+	txnType: string;
+	txnSubType: string;
+	address: string;
+	point: number;
+	installment: string;
+	merchantVposId: number;
+  }
+  
+  export interface PaymentResponse {
+	url: string;
+	responseCode: string;
+	responseMessage: string;
+	orderId: string;
+	txnType: string;
+	txnStatus: string;
+	vposId: number;
+	vposName: string;
+  }
+  
+  export interface CommissionInquiryRequest {
 	amount: string;
 	installmentCount: string;
 	memberId: number;
 	merchantId: number;
-}
-
-export interface CommissionInquiryResponse {
+  }
+  
+  export interface CommissionInquiryResponse {
 	hasCommissionInfo: boolean;
 	commissionRate: string;
 	amount: string;
-}
-
-export interface InstallmentInquiryResponse {
+  }
+  
+  export interface InstallmentInquiryResponse {
 	hasInstallment: number;
 	installments: string[];
 	vposId: string;
 	vposName: string;
-}
-
-export interface Card {
+  }
+  
+  export interface Card {
 	cardStatus: string;
 	customerId: string;
 	cardHolderName: string;
@@ -438,15 +438,15 @@ export interface Card {
 	cardBin: string;
 	expireDate: string;
 	secureDataId: string;
-}
-
-export interface CardListResponse {
+  }
+  
+  export interface CardListResponse {
 	fail: boolean;
 	statusCode: number;
 	result: Card[];
-}
-
-export interface CustomerCard {
+  }
+  
+  export interface CustomerCard {
 	cardMask: string;
 	month: string;
 	year: string;
@@ -457,42 +457,42 @@ export interface CustomerCard {
 	brandName: string;
 	eftCode: string;
 	cardType: string;
-}
-
-export interface CustomerCardsResponse {
+  }
+  
+  export interface CustomerCardsResponse {
 	customerCards: CustomerCard[];
-}
-
-export interface DeleteCustomerCardRequest {
+  }
+  
+  export interface DeleteCustomerCardRequest {
 	memberId: number;
 	merchantId: number;
 	customerId: string;
 	secureDataId: number;
-}
-
-export interface DeleteCustomerCardResponse {
+  }
+  
+  export interface DeleteCustomerCardResponse {
 	isSucceed: boolean;
 	message: string;
-}
-
-export interface OrderInquiryRequest {
+  }
+  
+  export interface OrderInquiryRequest {
 	memberId: number;
 	merchantId: number;
 	customerId?: string;
 	rnd: string;
 	hash: string;
 	orderNo?: string;
-}
-
-export interface OrderInquiryResponse {
+  }
+  
+  export interface OrderInquiryResponse {
 	fail: boolean;
 	statusCode: number;
 	result: OrderInquiryResult[];
 	errorCode?: string;
 	errorDescription?: string;
-}
-
-export interface OrderInquiryResult {
+  }
+  
+  export interface OrderInquiryResult {
 	orderId: string;
 	cardNo: string;
 	ccNo: string | null;
@@ -505,4 +505,5 @@ export interface OrderInquiryResult {
 	currencyCode: string;
 	responseCode: string;
 	responseMessage: string | null;
-}
+  }
+  
