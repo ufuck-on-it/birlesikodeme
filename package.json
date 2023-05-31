@@ -1,6 +1,6 @@
 {
   "name": "birlesikodeme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "nited Payment ödeme API’si, Internet üzerinden ödeme kabul eden tüm işyerlerinin ihtiyacına cevap verecek şekilde, oturum bilgisi tutmayan (stateless) Restful servis odaklı bir mimaride geliştirilmiştir.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
