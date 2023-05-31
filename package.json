@@ -20,8 +20,26 @@
     "url": "git+https://github.com/Ufuck1903/birlesikodeme.git"
   },
   "keywords": [
-    "United Payment Sanal Pos",
-    "birlesikodeme"
+    "payment",
+    "gateway",
+    "processing",
+    "integration",
+    "API",
+    "online payments",
+    "transactions",
+    "credit card",
+    "authorization",
+    "inquiry",
+    "commission",
+    "installment",
+    "card management",
+    "history",
+    "merchant",
+    "BIN",
+    "3D secure",
+    "customer cards",
+    "client",
+    "TypeScript"
   ],
   "author": "Ufuck1903",
   "license": "MIT",
