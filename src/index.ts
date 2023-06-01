@@ -62,12 +62,13 @@ class BirlesikOdeme {
         email,
       });
 
-      const { fail, statusCode, result, token } = response.data;
-      if (fail || statusCode !== 200 || !result || !token) {
+      const { fail, statusCode, result } = response.data;
+
+      if (fail || statusCode !== 200 || !result || !result.token) {
         throw new Error('Authentication failed');
       }
 
-      this.httpClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      this.httpClient.defaults.headers.common['Authorization'] = `Bearer ${result.token}`;
     } catch (error) {
       console.error('Authentication failed:', error);
       throw error;
