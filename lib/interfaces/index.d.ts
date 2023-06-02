@@ -31,7 +31,7 @@ export interface PaymentAuthorizationRequest {
     orderId: string;
     totalAmount: string;
     rnd: string;
-    hash: string;
+    hash?: string;
     description?: string;
     requestIp?: string;
     orderProductList?: OrderProduct[];
@@ -78,7 +78,7 @@ export interface Payment3dRequest {
     totalAmount: string;
     pointAmount: string;
     rnd: string;
-    hash: string;
+    hash?: string;
     description: string;
     requestIp: string;
     cardHolderName: string;
@@ -135,7 +135,7 @@ export interface PaymentInquiryRequest {
     memberId: number;
     merchantId: number;
     customerId?: string;
-    hash: string;
+    hash?: string;
     txnType?: string;
     rnd: string;
     orderNo: string;
@@ -336,7 +336,7 @@ export interface IptalIadeServisiRequest {
     orderId: string;
     totalAmount: string;
     rnd: string;
-    hash: string;
+    hash?: string;
     description?: string;
     requestIp?: string;
     extraData?: string;
@@ -446,7 +446,7 @@ export interface OrderInquiryRequest {
     merchantId: number;
     customerId?: string;
     rnd: string;
-    hash: string;
+    hash?: string;
     orderNo?: string;
 }
 export interface OrderInquiryResponse {
