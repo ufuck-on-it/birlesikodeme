@@ -1,10 +1,14 @@
 import { BinData, BinListResponse, Card, CardCheckPointsRequest, CardCheckPointsResponse, CommissionInquiryRequest, CommissionInquiryResponse, CommissionInstallResponse, CommissionResponse, CustomerCard, DeleteCustomerCardRequest, DeleteCustomerCardResponse, InstallmentInquiryResponse, IptalIadeServisiRequest, IptalIadeServisiResponse, MerchantData, OrderInquiryRequest, OrderInquiryResponse, Payment3dRequest, Payment3dResponse, PaymentAuthorizationRequest, PaymentAuthorizationResponse, PaymentInquiryRequest, PaymentInquiryResponse, SaveCardWithoutTransactionRequest, SaveCardWithoutTransactionResponse, TransactionData } from './interfaces';
-declare class BirlesikOdeme {
+declare class UnitedPaymentAuthentication {
+    private readonly httpClient;
+    constructor(baseUrl: string);
+    authenticate(email: string, password: string, lang: 'TR' | 'EN'): Promise<string>;
+}
+declare class UnitedPayment {
     private httpClient;
     private hashPassword;
-    constructor(baseUrl: string, password: string, lang: 'TR' | 'EN', email: string, hashPassword: string);
+    constructor(baseUrl: string, token: string, hashPassword: string);
     private calculateHash;
-    private authenticate;
     authorizePaymentIFrame(request: PaymentAuthorizationRequest): Promise<PaymentAuthorizationResponse>;
     noneSecurePayment(request: PaymentAuthorizationRequest): Promise<PaymentAuthorizationResponse>;
     Payment3d(request: Payment3dRequest): Promise<Payment3dResponse>;
@@ -26,4 +30,4 @@ declare class BirlesikOdeme {
     deleteCustomerCard(request: DeleteCustomerCardRequest): Promise<DeleteCustomerCardResponse>;
     orderInquiry(request: OrderInquiryRequest): Promise<OrderInquiryResponse>;
 }
-export default BirlesikOdeme;
+export { UnitedPayment, UnitedPaymentAuthentication };

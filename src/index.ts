@@ -34,18 +34,52 @@ import {
   TransactionListResponse,
 } from './interfaces';
 
-class BirlesikOdeme {
-  private httpClient: AxiosInstance;
-  private hashPassword: unknown;
-  constructor(baseUrl: string, password: string, lang: 'TR' | 'EN', email: string, hashPassword: string) {
+class UnitedPaymentAuthentication {
+  private readonly httpClient: AxiosInstance;
+
+  constructor(baseUrl: string) {
     this.httpClient = axios.create({
       baseURL: baseUrl,
       headers: {
         'Content-Type': 'application/json',
       },
     });
+  }
 
-    this.authenticate(password, lang, email).catch((error) => console.log('Authentication failed:', error));
+  public async authenticate(email: string, password: string, lang: 'TR' | 'EN'): Promise<string> {
+    try {
+      const response = await this.httpClient.post('/api/ppg/Securities/authenticationMerchant', {
+        email,
+        password,
+        lang,
+      });
+
+      const { fail, statusCode, result } = response.data;
+
+      if (fail || statusCode !== 200 || !result || !result.token) {
+        throw new Error('Authentication failed. Invalid response from the server.');
+      }
+
+      return result.token;
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      throw new Error('Authentication failed. Unable to authenticate merchant.');
+    }
+  }
+}
+
+class UnitedPayment {
+  private httpClient: AxiosInstance;
+  private hashPassword: unknown;
+  constructor(baseUrl: string, token: string, hashPassword: string) {
+    this.httpClient = axios.create({
+      baseURL: baseUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    this.hashPassword = hashPassword;
   }
 
   private calculateHash(data: string): string {
@@ -54,26 +88,6 @@ class BirlesikOdeme {
     return hash.digest('hex');
   }
 
-  private async authenticate(password: string, lang: string, email: string): Promise<void> {
-    try {
-      const response = await this.httpClient.post('/api/ppg/Securities/authenticationMerchant', {
-        password,
-        lang,
-        email,
-      });
-
-      const { fail, statusCode, result } = response.data;
-
-      if (fail || statusCode !== 200 || !result || !result.token) {
-        throw new Error('Authentication failed');
-      }
-
-      this.httpClient.defaults.headers.common['Authorization'] = `Bearer ${result.token}`;
-    } catch (error) {
-      console.error('Authentication failed:', error);
-      throw error;
-    }
-  }
   public async authorizePaymentIFrame(request: PaymentAuthorizationRequest): Promise<PaymentAuthorizationResponse> {
     try {
       // HASH hesaplama
@@ -518,4 +532,15 @@ class BirlesikOdeme {
   }
 }
 
-export default BirlesikOdeme;
+export { UnitedPayment, UnitedPaymentAuthentication };
+/*
+
+Example : 
+
+(async () => {
+  const authentication = new UnitedPaymentAuthentication('https://ppgsecurity-test.birlesikodeme.com:55002');
+  const token = await authentication.authenticate('', '', 'TR');
+  const unitedPayment = new UnitedPayment('https://ppgpayment-test.birlesikodeme.com:20000', token, '');
+  console.log(await unitedPayment.getBinList());
+})();
+*/
