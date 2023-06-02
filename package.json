@@ -1,7 +1,7 @@
 {
   "name": "unitedpayment",
-  "version": "1.1.1",
-  "description": "United Payment ödeme API’si, Internet üzerinden ödeme kabul eden tüm işyerlerinin ihtiyacına cevap verecek şekilde, oturum bilgisi tutmayan (stateless) Restful servis odaklı bir mimaride geliştirilmiştir.",
+  "version": "1.1.2",
+  "description": "United Payment API is developed in a stateless Restful service-oriented architecture to meet the needs of all merchants accepting payments over the Internet. It provides a wide range of features including merchant authentication, payment authorization, 3D secure, payment inquiry, commission inquiry, installment inquiry, card check, save card, transaction list, merchant list, bin list, card management, order inquiry, cancel or refund, manual payment, customer cards, delete card, authentication service, payment service, payment utilities, and merchant tools.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
