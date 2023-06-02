@@ -1,532 +1,330 @@
-# BirlesikOdeme Class Documentation
+### Example
 
-The `BirlesikOdeme` class is a TypeScript class that provides a client for interacting with a payment gateway API. It allows users to perform various payment-related operations such as payment authorization, payment inquiry, commission inquiry, installment inquiry, card management, and more.
+The following example demonstrates how to use the `UnitedPayment` class to authenticate and perform operations using the United Payment API.
 
-## Class: BirlesikOdeme
+```javascript
+(async () => {
+  // Create an instance of UnitedPaymentAuthentication
+  const authentication = new UnitedPaymentAuthentication('https://ppgsecurity-test.birlesikodeme.com:55002');
+
+  // Authenticate the merchant and obtain the authentication token
+  const token = await authentication.authenticate('', '', 'TR');
+
+  // Create an instance of UnitedPayment with the authentication token
+  const unitedPayment = new UnitedPayment('https://ppgpayment-test.birlesikodeme.com:20000', token, '');
+
+  // Get the list of BINs
+  console.log(await unitedPayment.getBinList());
+})();
+```
+
+This example demonstrates the following steps:
+
+1. Create an instance of `UnitedPaymentAuthentication` by providing the base URL for the authentication endpoint.
+2. Use the `authenticate` method to authenticate the merchant with the provided email, password, and language.
+3. Obtain the authentication token.
+4. Create an instance of `UnitedPayment` by providing the base URL for the payment endpoint and the authentication token.
+5. Use the `getBinList` method to retrieve the list of BINs.
+6. Print the list of BINs to the console.
+
+Please note that in the example, the email and password values are empty strings. You need to provide valid credentials for successful authentication. Additionally, make sure to replace the base URLs with the actual URLs of the United Payment API endpoints.
+
+## UnitedPaymentAuthentication Class
 
 ### Constructor
 
-#### Parameters
+#### UnitedPaymentAuthentication(baseUrl: string)
 
-- `baseUrl` (`string`): The base URL of the payment gateway API.
-- `password` (`string`): The password for authentication.
-- `lang` (`'TR' | 'EN'`): The language code for the API response (either 'TR' for Turkish or 'EN' for English).
-- `email` (`string`): The email address for authentication.
-- `hashPassword` (`string`): The hashed password for authentication.
-
-#### Example
-
-```typescript
-const birlesikOdeme = new BirlesikOdeme(baseUrl, password, lang, email, hashPassword)
-```
-
-### Methods
-
-#### authorizePaymentIFrame
-
-Authorize a payment using an iframe.
+Creates an instance of the UnitedPaymentAuthentication class.
 
 ##### Parameters
 
-- `request` (`PaymentAuthorizationRequest`): The payment authorization request parameters.
+- `baseUrl`: A string representing the base URL of the API.
 
-##### Returns
+### authenticate(email: string, password: string, lang: 'TR' | 'EN'): Promise&lt;string&gt;
 
-- `Promise<PaymentAuthorizationResponse>`: A promise that resolves to the payment authorization response.
-
-##### Example
-
-```typescript
-const request: PaymentAuthorizationRequest = {
-	// request parameters
-}
-
-const response = await birlesikOdeme.authorizePaymentIFrame(request)
-```
-
-#### noneSecurePayment
-
-Perform a non-secure payment.
+Authenticates the merchant and returns an authentication token.
 
 ##### Parameters
 
-- `request` (`PaymentAuthorizationRequest`): The non-secure payment request parameters.
+- `email`: A string representing the email of the merchant.
+- `password`: A string representing the password of the merchant.
+- `lang`: A string representing the language (TR or EN) for the authentication request.
 
 ##### Returns
 
-- `Promise<PaymentAuthorizationResponse>`: A promise that resolves to the non-secure payment response.
+A Promise that resolves to a string representing the authentication token.
 
-##### Example
+## UnitedPayment Class
 
-```typescript
-const request: PaymentAuthorizationRequest = {
-	// request parameters
-}
+### Constructor
 
-const response = await birlesikOdeme.noneSecurePayment(request)
-```
+#### UnitedPayment(baseUrl: string, token: string, hashPassword: string)
 
-#### Payment3d
-
-Perform a 3D payment.
+Creates an instance of the UnitedPayment class.
 
 ##### Parameters
 
-- `request` (`Payment3dRequest`): The 3D payment request parameters.
+- `baseUrl`: A string representing the base URL of the API.
+- `token`: A string representing the authentication token.
+- `hashPassword`: A string representing the hash password for calculating the hash.
 
-##### Returns
+### authorizePaymentIFrame(request: PaymentAuthorizationRequest): Promise&lt;PaymentAuthorizationResponse&gt;
 
-- `Promise<Payment3dResponse>`: A promise that resolves to the 3D payment response.
-
-##### Example
-
-```typescript
-const request: Payment3dRequest = {
-	// request parameters
-}
-
-const response = await birlesikOdeme.Payment3d(request)
-```
-
-#### paymentInquiry
-
-Inquire about a payment.
+Authorizes a payment and returns the payment authorization response.
 
 ##### Parameters
 
-- `request` (`PaymentInquiryRequest`): The payment inquiry request parameters.
+- `request`: An object of type PaymentAuthorizationRequest containing the payment authorization request details.
 
 ##### Returns
 
-- `Promise<PaymentInquiryResponse>`: A promise that resolves to the payment inquiry response.
+A Promise that resolves to an object of type PaymentAuthorizationResponse representing the payment authorization response.
 
-##### Example
+### noneSecurePayment(request: PaymentAuthorizationRequest): Promise&lt;PaymentAuthorizationResponse&gt;
 
-```typescript
-const request: PaymentInquiryRequest = {
-	// request parameters
-}
-
-const response = await birlesikOdeme.paymentInquiry(request)
-```
-
-#### getCommissionSale
-
-Get commission sale information.
-
-##### Returns
-
-- `Promise<CommissionResponse[]>`: A promise that resolves to an array of commission sale information.
-
-##### Example
-
-```typescript
-const response = await birlesikOdeme.getCommissionSale()
-```
-
-#### getCommissionInstall
-
-Get commission install information.
-
-##### Returns
-
-- `Promise<CommissionInstallResponse[]>`: A promise that resolves to an array of commission install information.
-
-##### Example
-
-```typescript
-const response = await birlesikOdeme.getCommissionInstall()
-```
-
-#### getBinListWithId
-
-Get BIN list with a specific ID.
+Performs a non-secure payment and returns the payment authorization response.
 
 ##### Parameters
 
-- `bin` (`string`): The BIN (Bank Identification Number) to search for.
+- `request`: An object of type PaymentAuthorizationRequest containing the non-secure payment request details.
 
 ##### Returns
 
-- `Promise<BinListResponse[]>`: A promise that resolves to an array of BIN list responses.
+A Promise that resolves to an object of type PaymentAuthorizationResponse representing the payment authorization response.
 
-##### Example
+### Payment3d(request: Payment3dRequest): Promise&lt;Payment3dResponse&gt;
 
-```typescript
-const bin = '123456'
-const response = await
-
-birlesikOdeme.getBinListWithId(bin)
-```
-
-#### saveCardWithoutTransaction
-
-Save a card without performing a transaction.
+Performs a 3D payment and returns the payment response.
 
 ##### Parameters
 
-- `request` (`SaveCardWithoutTransactionRequest`): The save card without transaction request parameters.
+- `request`: An object of type Payment3dRequest containing the 3D payment request details.
 
 ##### Returns
 
-- `Promise<SaveCardWithoutTransactionResponse>`: A promise that resolves to the save card without transaction response.
+A Promise that resolves to an object of type Payment3dResponse representing the payment response.
 
-##### Example
+### paymentInquiry(request: PaymentInquiryRequest): Promise&lt;PaymentInquiryResponse&gt;
 
-```typescript
-const request: SaveCardWithoutTransactionRequest = {
-	// request parameters
-}
-
-const response = await birlesikOdeme.saveCardWithoutTransaction(request)
-```
-
-#### getTransactionList
-
-Get a list of transactions.
+Performs a payment inquiry and returns the payment inquiry response.
 
 ##### Parameters
 
-- `merchantId` (`number`): The merchant ID.
-- `orderNo` (`string`): The order number.
-- `txnTypeList` (`string[]`): An array of transaction types.
-- `cardMask` (`string`): The masked card number.
-- `startDate` (`number`): The start date of the transaction.
-- `endDate` (`number`): The end date of the transaction.
-- `responseCode` (`string`): The response code of the transaction.
-- `txnStatus` (`string`): The status of the transaction.
-- `authCode` (`string`): The authorization code of the transaction.
-- `customerId` (`string`): The customer ID.
-- `page` (`number`): The page number.
-- `pageSize` (`number`): The page size.
-- `sortOrder` (`string`): The sort order.
-- `sortField` (`string`): The sort field.
+- `request`: An object of type PaymentInquiryRequest containing the payment inquiry request details.
 
 ##### Returns
 
-- `Promise<TransactionData[]>`: A promise that resolves to an array of transaction data.
+A Promise that resolves to an object of type PaymentInquiryResponse representing the payment inquiry response.
 
-##### Example
+### getCommissionSale(): Promise&lt;CommissionResponse[]&gt;
 
-```typescript
-const merchantId = 123
-const orderNo = 'ABC123'
-const txnTypeList = ['SALE']
-const cardMask = '****1234'
-const startDate = 1622400000000
-const endDate = 1622499999999
-const responseCode = '00'
-const txnStatus = 'SUCCESS'
-const authCode = '123456'
-const customerId = 'CUST123'
-const page = 1
-const pageSize = 10
-const sortOrder = 'ASC'
-const sortField = 'date'
+Retrieves the commission sale data.
 
-const transactions = await birlesikOdeme.getTransactionList(
-	merchantId,
-	orderNo,
-	txnTypeList,
-	cardMask,
-	startDate,
-	endDate,
-	responseCode,
-	txnStatus,
-	authCode,
-	customerId,
-	page,
-	pageSize,
-	sortOrder,
-	sortField
-)
-```
+##### Returns
 
-#### getMerchantList
+A Promise that resolves to an array of objects of type CommissionResponse representing the commission sale data.
 
-Get a list of merchants.
+### getCommissionInstall(): Promise&lt;CommissionInstallResponse[]&gt;
+
+Retrieves the installment commission data.
+
+##### Returns
+
+A Promise that resolves to an array of objects of type CommissionInstallResponse representing the installment commission data.
+
+### getBinListWithId(bin: string): Promise&lt;BinListResponse[]&gt;
+
+Retrieves the BIN (Bank Identification Number) list based on the given BIN.
 
 ##### Parameters
 
-- `parentMerchantId` (`number`): The parent merchant ID.
-- `identityNumber` (`string`): The identity number.
-- `taxNumber` (`string`): The tax number.
-- `page` (`number`): The page number.
-- `pageSize` (`number`): The page size.
-- `sortOrder` (`string`): The sort order.
-- `sortField` (`string`): The sort field.
+- `bin`: A string representing the BIN for which the BIN list is requested.
 
 ##### Returns
 
-- `Promise<MerchantData[]>`: A promise that resolves to an array of merchant data.
+A Promise that resolves to an array of objects of type BinListResponse representing the BIN list.
 
-##### Example
+### saveCardWithoutTransaction(request: SaveCardWithoutTransactionRequest): Promise&lt;SaveCardWithoutTransactionResponse&gt;
 
-```typescript
-const parentMerchantId = 123
-const identityNumber = '1234567890'
-const taxNumber = '0987654321'
-const page = 1
-const pageSize = 10
-const sortOrder = 'ASC'
-const sortField = 'name'
-
-const merchants = await birlesikOdeme.getMerchantList(
-	parentMerchantId,
-	identityNumber,
-	taxNumber,
-	page,
-	pageSize,
-	sortOrder,
-	sortField
-)
-```
-
-#### getBinList
-
-Get the BIN list.
-
-##### Returns
-
-- `Promise<BinData[]>`: A promise that resolves to an array of BIN data.
-
-##### Example
-
-```typescript
-const binList = await birlesikOdeme.getBinList()
-```
-
-#### cardCheckPoints
-
-Check the points of a card.
+Saves a card without performing a transaction and returns the response.
 
 ##### Parameters
 
-- `request` (`CardCheckPointsRequest`): The card check points request parameters.
+- `request`: An object of type SaveCardWithoutTransactionRequest containing the request details for saving the card.
 
 ##### Returns
 
-- `Promise<CardCheckPointsResponse>`: A promise that resolves to the card check points response.
+A Promise that resolves to an object of type SaveCardWithout
 
-##### Example
+TransactionResponse representing the response.
 
-```typescript
-const request: CardCheckPointsRequest = {
-	// request parameters
-}
+### getTransactionList(merchantId: number, orderNo: string, txnTypeList: string[], cardMask: string, startDate: number, endDate: number, responseCode: string, txnStatus: string, authCode: string, customerId: string, page: number, pageSize: number, sortOrder: string, sortField: string): Promise&lt;TransactionData[]&gt;
 
-const response = await birlesikOdeme.cardCheckPoints(request)
-```
-
-#### cancelOrRefund
-
-Cancel or refund a payment.
+Retrieves a list of transactions based on the provided filters.
 
 ##### Parameters
 
-- `request` (`IptalIadeServisiRequest`): The cancel or refund request parameters.
+- `merchantId`: A number representing the merchant ID.
+- `orderNo`: A string representing the order number.
+- `txnTypeList`: An array of strings representing the transaction types.
+- `cardMask`: A string representing the card mask.
+- `startDate`: A number representing the start date of the transaction.
+- `endDate`: A number representing the end date of the transaction.
+- `responseCode`: A string representing the response code.
+- `txnStatus`: A string representing the transaction status.
+- `authCode`: A string representing the authorization code.
+- `customerId`: A string representing the customer ID.
+- `page`: A number representing the page number.
+- `pageSize`: A number representing the page size.
+- `sortOrder`: A string representing the sort order.
+- `sortField`: A string representing the sort field.
 
 ##### Returns
 
-- `Promise<IptalIadeServisiResponse>`: A promise that resolves to the cancel or refund response.
+A Promise that resolves to an array of objects of type TransactionData representing the list of transactions.
 
-##### Example
+### getMerchantList(parentMerchantId: number, identityNumber: string, taxNumber: string, page: number, pageSize: number, sortOrder: string, sortField: string): Promise&lt;MerchantData[]&gt;
 
-```typescript
-const request: IptalIadeServisiRequest = {
-	// request parameters
-}
-
-const response = await birlesikOdeme.cancelOrRefund(request)
-```
-
-#### ManuelPayment
-
-Perform a manual payment.
+Retrieves a list of merchants based on the provided filters.
 
 ##### Parameters
 
-- `paymentRequest` (`PaymentRequest`): The manual payment request parameters.
+- `parentMerchantId`: A number representing the parent merchant ID.
+- `identityNumber`: A string representing the identity number.
+- `taxNumber`: A string representing the tax number.
+- `page`: A number representing the page number.
+- `pageSize`: A number representing the page size.
+- `sortOrder`: A string representing the sort order.
+- `sortField`: A string representing the sort field.
 
 ##### Returns
 
-- `Promise<PaymentResponse>`: A promise that resolves to the manual payment response.
+A Promise that resolves to an array of objects of type MerchantData representing the list of merchants.
 
-##### Example
+### getBinList(): Promise&lt;BinData[]&gt;
 
-```typescript
-const paymentRequest: PaymentRequest = {
-	// request parameters
-}
+Retrieves the list of BINs (Bank Identification Numbers).
 
-const response = await birlesikOdeme.ManuelPayment(paymentRequest)
-```
+##### Returns
 
-#### commissionInquiry
+A Promise that resolves to an array of objects of type BinData representing the list of BINs.
 
-Inquire about commission information.
+### cardCheckPoints(request: CardCheckPointsRequest): Promise&lt;CardCheckPointsResponse&gt;
+
+Checks the card points and returns the response.
 
 ##### Parameters
 
-- `request` (`CommissionInquiryRequest`): The commission inquiry request parameters.
+- `request`: An object of type CardCheckPointsRequest containing the request details for checking the card points.
 
 ##### Returns
 
-- `Promise<CommissionInquiryResponse>`: A promise that resolves to the commission inquiry response.
+A Promise that resolves to an object of type CardCheckPointsResponse representing the response.
 
-##### Example
+### cancelOrRefund(request: IptalIadeServisiRequest): Promise&lt;IptalIadeServisiResponse&gt;
 
-```typescript
-const request: CommissionInquiryRequest = {
-	// request parameters
-}
-
-const response = await birlesikOdeme.commissionInquiry(request)
-```
-
-#### installmentInquiry
-
-Inquire about installment information.
+Performs a cancel or refund operation and returns the response.
 
 ##### Parameters
 
-- `merchantId` (`number`): The merchant ID.
-- `bin` (`string`): The BIN (Bank Identification Number).
-- `txnType` (`string`): The transaction type.
+- `request`: An object of type IptalIadeServisiRequest containing the request details for the cancel or refund operation.
 
 ##### Returns
 
-- `Promise<InstallmentInquiryResponse>`: A promise that resolves to the installment inquiry response.
+A Promise that resolves to an object of type IptalIadeServisiResponse representing the response.
 
-##### Example
+### ManuelPayment(paymentRequest: PaymentRequest): Promise&lt;PaymentResponse&gt;
 
-```typescript
-const merchantId = 123
-const bin = '123456'
-const txnType = 'SALE'
-
-const response = await birlesikOdeme.installmentInquiry(merchantId, bin, txnType)
-```
-
-#### getCardList
-
-Get a list of cards.
+Performs a manual payment and returns the response.
 
 ##### Parameters
 
-- `memberId` (`number`): The member ID.
-- `merchantId` (`string`): The merchant ID.
-- `customerId` (`string`): The customer ID.
-- `userCode` (`string`): The user code.
-- `rnd` (`string`): The random string.
-- `hash` (`string`): The hash value.
+- `paymentRequest`: An object of type PaymentRequest containing the request details for the manual payment.
 
 ##### Returns
 
-- `Promise<Card[]>`: A promise that resolves to an array of cards.
+A Promise that resolves to an object of type PaymentResponse representing the response.
 
-##### Example
+### commissionInquiry(request: CommissionInquiryRequest): Promise&lt;CommissionInquiryResponse&gt
 
-```typescript
-const memberId = 123
-const merchantId = 'MERCHANT123'
-const customerId = 'CUSTOMER123'
-const userCode = 'USER123'
-const rnd = 'ABC123'
-const hash = 'HASH123'
+;
 
-const cards = await birlesikOdeme.getCardList(memberId, merchantId, customerId, userCode, rnd, hash)
-```
-
-#### getCustomerCards
-
-Get a list of customer cards.
+Performs a commission inquiry and returns the response.
 
 ##### Parameters
 
-- `memberId` (`number`): The member ID.
-- `merchant
-
-Id` (`number`): The merchant ID.
-
-- `customerId` (`string`): The customer ID.
+- `request`: An object of type CommissionInquiryRequest containing the request details for the commission inquiry.
 
 ##### Returns
 
-- `Promise<CustomerCard[]>`: A promise that resolves to an array of customer cards.
+A Promise that resolves to an object of type CommissionInquiryResponse representing the response.
 
-##### Example
+### installmentInquiry(merchantId: number, bin: string, txnType: string): Promise&lt;InstallmentInquiryResponse&gt;
 
-```typescript
-const memberId = 123
-const merchantId = 456
-const customerId = 'CUSTOMER123'
-
-const customerCards = await birlesikOdeme.getCustomerCards(memberId, merchantId, customerId)
-```
-
-#### deleteCustomerCard
-
-Delete a customer card.
+Performs an installment inquiry and returns the response.
 
 ##### Parameters
 
-- `request` (`DeleteCustomerCardRequest`): The delete customer card request parameters.
+- `merchantId`: A number representing the merchant ID.
+- `bin`: A string representing the BIN (Bank Identification Number).
+- `txnType`: A string representing the transaction type.
 
 ##### Returns
 
-- `Promise<DeleteCustomerCardResponse>`: A promise that resolves to the delete customer card response.
+A Promise that resolves to an object of type InstallmentInquiryResponse representing the response.
 
-##### Example
+### getCardList(memberId: number, merchantId: string, customerId: string, userCode: string, rnd: string, hash: string): Promise&lt;Card[]&gt;
 
-```typescript
-const request: DeleteCustomerCardRequest = {
-	// request parameters
-}
-
-const response = await birlesikOdeme.deleteCustomerCard(request)
-```
-
-#### orderInquiry
-
-Inquire about an order.
+Retrieves the list of cards associated with a customer.
 
 ##### Parameters
 
-- `request` (`OrderInquiryRequest`): The order inquiry request parameters.
+- `memberId`: A number representing the member ID.
+- `merchantId`: A string representing the merchant ID.
+- `customerId`: A string representing the customer ID.
+- `userCode`: A string representing the user code.
+- `rnd`: A string representing the random number.
+- `hash`: A string representing the hash.
 
 ##### Returns
 
-- `Promise<OrderInquiryResponse>`: A promise that resolves to the order inquiry response.
+A Promise that resolves to an array of objects of type Card representing the list of cards.
 
-##### Example
+### getCustomerCards(memberId: number, merchantId: number, customerId: string): Promise&lt;CustomerCard[]&gt;
 
-```typescript
-const request: OrderInquiryRequest = {
-	// request parameters
-}
+Retrieves the list of customer cards.
 
-const response = await birlesikOdeme.orderInquiry(request)
-```
+##### Parameters
 
-## Example Usage
+- `memberId`: A number representing the member ID.
+- `merchantId`: A number representing the merchant ID.
+- `customerId`: A string representing the customer ID.
 
-```typescript
-import BirlesikOdeme from './BirlesikOdeme'
+##### Returns
 
-// Initialize the BirlesikOdeme instance
-const birlesikOdeme = new BirlesikOdeme(
-	'https://api.payment-gateway.com',
-	'password123',
-	'EN',
-	'example@example.com',
-	'hashPassword123'
-)
+A Promise that resolves to an array of objects of type CustomerCard representing the list of customer cards.
 
-// Perform payment authorization
-const authorizationRequest = {
-	// request parameters
-}
+### deleteCustomerCard(request: DeleteCustomerCardRequest): Promise&lt;DeleteCustomerCardResponse&gt;
 
-const authorizationResponse = await birlesikOdeme.authorizePaymentIFrame(authorizationRequest)
-```
+Deletes a customer card and returns the response.
+
+##### Parameters
+
+- `request`: An object of type DeleteCustomerCardRequest containing the request details for deleting the customer card.
+
+##### Returns
+
+A Promise that resolves to an object of type DeleteCustomerCardResponse representing the response.
+
+### orderInquiry(request: OrderInquiryRequest): Promise&lt;OrderInquiryResponse&gt;
+
+Performs an order inquiry and returns the response.
+
+##### Parameters
+
+- `request`: An object of type OrderInquiryRequest containing the request details for the order inquiry.
+
+##### Returns
+
+A Promise that resolves to an object of type OrderInquiryResponse representing the response.
