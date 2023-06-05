@@ -1,6 +1,6 @@
 {
   "name": "unitedpayment",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "United Payment API is developed in a stateless Restful service-oriented architecture to meet the needs of all merchants accepting payments over the Internet. It provides a wide range of features including merchant authentication, payment authorization, 3D secure, payment inquiry, commission inquiry, installment inquiry, card check, save card, transaction list, merchant list, bin list, card management, order inquiry, cancel or refund, manual payment, customer cards, delete card, authentication service, payment service, payment utilities, and merchant tools.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
